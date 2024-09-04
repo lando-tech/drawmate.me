@@ -39,6 +39,7 @@ class xml2json:
     def create_dict(self):
         num_cells = 0
         num_points = 0
+        num_array = 0
         for item in self.xml_string.iter():
             if item.tag == "mxfile":
                 pass
@@ -55,9 +56,17 @@ class xml2json:
             elif item.tag == "mxGeometry":
                 self.mxfile["diagram"]["mxGraphModel"]["root"][f"mxCell-{num_cells}"].update(
                     dict({"mxGeometry": self._preserve_escape_chars(item.attrib)}))
+            elif item.tag == "Array":
+                num_array = num_cells
+                self.mxfile["diagram"]["mxGraphModel"]["root"][f"mxCell-{num_cells}"]["mxGeometry"].update(
+                    dict({"Array": self._preserve_escape_chars(item.attrib)}))
+            elif item.tag == "mxPoint" and num_array == num_cells:
+                num_points += 1
+                self.mxfile["diagram"]["mxGraphModel"]["root"][f"mxCell-{num_cells}"]["mxGeometry"]["Array"].update(
+                    dict({f"mxPoint-{num_points}": self._preserve_escape_chars(item.attrib)}))
             elif item.tag == "mxPoint":
                 num_points += 1
-                self.mxfile["diagram"]["mxGraphModel"]["root"][f"mxCell-{num_cells}"].update(
+                self.mxfile["diagram"]["mxGraphModel"]["root"][f"mxCell-{num_cells}"]["mxGeometry"].update(
                     dict({f"mxPoint-{num_points}": self._preserve_escape_chars(item.attrib)}))
 
         return self.mxfile
@@ -102,5 +111,5 @@ class xml2json:
                     json.dump(updated_json, update, indent=4)
 
 
-xml_obj = xml2json(export_xml_files()[1])
+xml_obj = xml2json("../data/xml_files/Audio_DMP64_CP108.drawio.xml")
 xml_obj.write_json()

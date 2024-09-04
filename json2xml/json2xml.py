@@ -79,7 +79,7 @@ def json_to_xml(json_file_path, xml_file_path):
 
 # Usage
 json_file_path = f'../data/json_files/{export_template()}'
-xml_file_path = f'{export_xml_files()[2]}'
+xml_file_path = f'/home/landotech/Documents/GitHub/diagram_me/data/xml_files/test2.drawio.xml'
 
 # Example updates: adjust according to JSON structure
 updates = {
