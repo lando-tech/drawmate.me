@@ -42,7 +42,7 @@ class XML2JSON:
 
 # Usage
 xml_file_path = '../data/xml_files/Video_CP108_2codec.drawio.xml'
-json_file_path = '../data/json_files/converted.json'
+json_file_path = 'converted.json'
 
 converter = XML2JSON(xml_file_path)
 converter.convert_to_json(json_file_path)
@@ -107,7 +107,7 @@ def json_to_xml(json_file_path, xml_file_path):
 
 
 # Usage
-json_file_path = '../data/json_files/converted.json'
+json_file_path = 'converted.json'
 xml_file_path = '../data/xml_files/updated_diagram.xml'
 
 # Example updates: adjust according to JSON structure

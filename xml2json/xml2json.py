@@ -83,7 +83,7 @@ class xml2json:
         return self.xml_string
 
     def get_current_template(self):
-        self.current_template = f"template{self.timestamp}.json"
+        self.current_template = f"VideoCodec{self.timestamp}.json"
         return self.current_template
 
     def get_template_dict(self):
@@ -111,5 +111,5 @@ class xml2json:
                     json.dump(updated_json, update, indent=4)
 
 
-xml_obj = xml2json("../data/xml_files/Audio_DMP64_CP108.drawio.xml")
+xml_obj = xml2json("../data/xml_files/Video_CP108_2codec.drawio.xml")
 xml_obj.write_json()
