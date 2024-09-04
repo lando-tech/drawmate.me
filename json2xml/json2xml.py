@@ -1,6 +1,16 @@
 import json
+import re
+
 from lxml.etree import Element, ElementTree
-from lxml import etree
+from xml2json import xml2json
+from main.constants import *
+
+try:
+    from lxml import etree
+    print("running with lxml.etree")
+except ImportError:
+    import xml.etree.ElementTree as etree
+    print("running with Python's standard xml.etree.ElementTree")
 
 
 def json_to_dict(json_data):
@@ -12,6 +22,12 @@ def dict_to_xml(tag, d):
     """Convert a dictionary to XML, handling CDATA and preserving structure."""
     elem = Element(tag)
     for key, val in d.items():
+        # remove number id from mxCell and mxPoint
+        if re.match(r'mxCell-\d+', key):
+            key = 'mxCell'
+        elif re.match(r'mxPoint-\d+', key):
+            key = 'mxPoint'
+
         if isinstance(val, dict):
             child = dict_to_xml(key, val)
             elem.append(child)
@@ -35,9 +51,9 @@ def update_json(json_file_path):
     # for key, value in updates.items():
         # Implement more complex logic as needed for nested updates
         # if isinstance(value, dict):
-            # data[key].update(value)
+        # data[key].update(value)
         # else:
-            # data[key] = value
+        # data[key] = value
 
     # Write the updated JSON back to the file
     with open(json_file_path, 'w', encoding='utf-8') as json_file:
@@ -62,8 +78,8 @@ def json_to_xml(json_file_path, xml_file_path):
 
 
 # Usage
-json_file_path = '../data/json_files/template2.json'
-xml_file_path = '../data/xml_files/updated_diagram.drawio.xml'
+json_file_path = f'../data/json_files/{export_template()}'
+xml_file_path = f'{export_xml_files()[2]}'
 
 # Example updates: adjust according to JSON structure
 updates = {
