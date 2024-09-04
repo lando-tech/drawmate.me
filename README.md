@@ -1,4 +1,4 @@
-# diagram_me
+# drawmate.me
  Automate wiremaps and diagrams using draw.io format.
 
  !!! This program is still under development !!! Looking for active contributers. Make a fork if interested.
