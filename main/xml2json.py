@@ -3,7 +3,7 @@ import json
 from xml.etree import ElementTree as et
 from datetime import datetime
 from os import path
-from main.constants import export_xml_files
+from constants import export_xml_files
 
 
 # noinspection PyTypeChecker
@@ -71,45 +71,41 @@ class xml2json:
 
         return self.mxfile
 
-    def write_json(self):
+    def write_json(self, temp_name: str):
 
-        with open(f'../data/json_files/{self.get_current_template()}', 'w') as cell:
+        with open(f'../data/json_files/{self.get_current_template(temp_name)}', 'w') as cell:
             json.dump(obj=self.create_dict(), fp=cell, indent=4, ensure_ascii=False)
 
-        self.get_template_dict()
-        self.create_template_json()
+        self.get_template_dict(temp_name)
+        self.create_template_json(temp_name)
 
     def from_string(self):
         return self.xml_string
 
-    def get_current_template(self):
-        self.current_template = f"VideoCodec{self.timestamp}.json"
+    def get_current_template(self, temp_name: str):
+        self.current_template = f"{temp_name}-{self.timestamp}.json"
         return self.current_template
 
-    def get_template_dict(self):
-        self.template_dict["templates"].append(self.get_current_template())
+    def get_template_dict(self, temp_name: str):
+        self.template_dict["templates"].append(self.get_current_template(temp_name))
         return self.template_dict
 
-    def create_template_json(self):
+    def create_template_json(self, temp_name: str):
 
         if (path.exists('../data/templates/template_list.json')
                 and path.getsize('../data/templates/template_list.json') > 0):
-            self.update_json()
+            self.update_json(temp_name)
         else:
             with open('../data/templates/template_list.json', 'w') as temp:
                 json.dump(self.template_dict, temp, indent=4)
                 print("file saved to disk")
 
-    def update_json(self):
+    def update_json(self, temp_name: str):
 
         with open('../data/templates/template_list.json', 'r') as temp_list:
             loaded_list = json.load(temp_list)
             for key, value in loaded_list.items():
-                value.append(self.get_current_template())
+                value.append(self.get_current_template(temp_name))
                 updated_json = {"templates": value}
                 with open('../data/templates/template_list.json', 'w') as update:
                     json.dump(updated_json, update, indent=4)
-
-
-xml_obj = xml2json("../data/xml_files/Video_CP108_2codec.drawio.xml")
-xml_obj.write_json()

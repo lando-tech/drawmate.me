@@ -15,7 +15,7 @@ class DataExtract:
 
     def __init__(self):
         # Initialize list of file names stored in the data directory
-        self.file_names = os.listdir('data/txt_files/extracted_text')
+        self.file_names = os.listdir('../data/txt_files/extracted_text')
         # Initialize current date variable to add the date to the file name
         self.current_date = datetime.today()
 
@@ -47,7 +47,7 @@ class DataExtract:
         with pymupdf.open(path_to_pdf) as doc:
             text = chr(12).join([page.get_text() for page in doc])
             pathlib.Path(
-                f"data/txt_files/extracted_text/{new_file}-{self.current_date}" + ".txt").write_bytes(text.encode())
+                f"../data/txt_files/extracted_text/{new_file}-{self.current_date}" + ".txt").write_bytes(text.encode())
             while not pathlib.Path(new_file):
                 try:
                     file_path = pathlib.Path(f"{new_file}")
