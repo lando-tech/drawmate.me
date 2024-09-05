@@ -29,7 +29,9 @@ def get_user_input():
         elif prompt == 2:
             pdf_convert.convert_pdf(new_file_name='pdf_extract')
         elif prompt == 3:
-            pass
+            for i in view_templates():
+                print(i)
+            choose_temp = int(input('Please select a template to export: '))
         elif prompt == 4:
             pass
         elif prompt == 5:
@@ -37,7 +39,7 @@ def get_user_input():
                 print(i)
         elif prompt == 6:
             print('exiting...')
-            should_continue == False
+            should_continue = False
             break
         else:
             print("Please select an option 1-5")
