@@ -2,7 +2,6 @@ import json
 import re
 
 from lxml.etree import Element, ElementTree
-from main import *
 
 try:
     from lxml import etree
