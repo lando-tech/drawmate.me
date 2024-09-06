@@ -15,7 +15,7 @@ class DataExtract:
 
     def __init__(self):
         # Initialize list of file names stored in the data directory
-        self.file_names = os.listdir('../data/txt_files/extracted_text')
+        self.file_names = os.listdir('/home/landotech/Documents/GitHub/drawmate.me/data/txt_files/extracted_text')
         # Initialize current date variable to add the date to the file name
         self.current_date = datetime.today()
 
