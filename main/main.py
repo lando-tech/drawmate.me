@@ -11,7 +11,7 @@ XML_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/xml_files/'
 
 
 def get_user_input(prompt):
-   # Receive user input and call the proper function. 
+    # Receive user input and call the proper function. 
     num_templates = 0
     
     if prompt == 1:
@@ -60,7 +60,7 @@ while should_continue:
                        "\t[7] Exit\n\n"))
     if prompt == 7:
         print("exiting....")
-        time.sleep(2)
+        time.sleep(1)
         print("Goodbye")
         should_continue == False
         break
