@@ -1,14 +1,16 @@
 import json
 import re
 
+
+path_var = '/home/landotech/Documents/GitHub/drawmate.me/data/json_files/VideoNew-2024-09-06 13:21:08.825787.json'
 pattern1 = r'\{\{.*?\}\}'
 
 av_connections = {}
 
-with open('data/json_files/template2.json') as new_connection:
+with open(path_var, 'r', encoding='utf-8') as new_connection:
     data = json.load(new_connection)
 
-for key, value in data['mxfile']['diagram']['mxGraphModel']['root'].items():
+for key, value in data['diagram']['mxGraphModel']['root'].items():
     av_connections.update(dict({value.get('id'): value.get('value')}))
 
 values_list = []
