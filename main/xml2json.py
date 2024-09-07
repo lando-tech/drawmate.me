@@ -5,9 +5,6 @@ from datetime import datetime
 from os import path
 from constants import export_xml_files
 
-CONNECTIONS_PATH = 
-JSON_TEMP_PATH = 
-
 
 # noinspection PyTypeChecker
 class xml2json:

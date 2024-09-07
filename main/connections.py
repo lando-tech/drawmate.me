@@ -20,11 +20,10 @@ for key, value in av_connections.items():
 connections = []
 for i in values_list:
     found = re.findall(pattern1, str(i))
-    if found:
-        connections.append(found)
-
+    for match in found:
+        filtered_ = match.strip('{').strip('}') 
+        print(filtered_)
 connections_dict = {item[0]: item[1] for item in connections if len(item) == 2}
 
-for key, value in connections_dict.items():
-    print(key, value)
-
+#for keys, values in connections_dict.items():
+#    print(keys)
