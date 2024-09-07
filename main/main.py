@@ -41,7 +41,7 @@ def get_user_input(prompt):
         for i in view_templates():
             print(f'\n{i}')
     elif prompt == 6:
-
+        pass
     else:
         print("Please select an option 1-6")
 
