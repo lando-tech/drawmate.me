@@ -1,7 +1,17 @@
 #!/bin/bash
 
+# Specify format: xml, html, pdf, svg, png
+format="$1"
 
-echo What format would you like to export?
+# Specify where to output the file
+out_path="$2"
 
-#/snap/draw.io --export --format [FORMAT] --output [OUTPUT_PATH] [INPUT_FILE]
+# Specify the file to be converted
+in_path="$3"
+
+# Convert the file and capture error logs
+drawio --export --format $format --output $out_path $in_path > /home/landotech/Documents/GitHub/drawmate.me/logs/bash_script_logs/drawio_logs.log 2>&1
+
+# confirm
+echo conversion complete
 

@@ -13,6 +13,10 @@ class PathFinder:
         self.CONNECTIONS_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/connections/'
         self.CSV_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/csv_files/'
         self.TXT_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/txt_files/'
+        self.HTML_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/html_files/'
+        self.PDF_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/pdf_files/'
+        self.PNG_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/png_files/'
+        self.SVG_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/svg_files/'
         self.FILETYPES = (('xml files', '*.xml'), ('all files', '*.*')) 
 
     def export_xml_files(self):
@@ -51,6 +55,18 @@ class PathFinder:
                 template_list = value
             
             return template_list
+    
+    def get_html_dir(self):
+        return self.HTML_DIR
+    
+    def get_pdf_dir(self):
+        return self.PDF_DIR
+
+    def get_png_dir(self):
+        return self.PNG_DIR
+
+    def get_svg_dir(self):
+        return self.SVG_DIR
 
     def get_text_dir(self):
         return self.TXT_DIR 
