@@ -6,7 +6,8 @@ class PathFinder:
 
     def __init__(self):
         # Path to the data directories to export to other modules
-        self.XML_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/xml_files/'
+        self.XML_EXPORT_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/xml_files/xml_exports/'
+        self.XML_UPLOAD_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/xml_files/xml_uploads/'
         self.TEMPLATE_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/templates/'
         self.JSON_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/json_files/'
         self.CONNECTIONS_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/connections/'
@@ -53,3 +54,25 @@ class PathFinder:
 
     def get_text_dir(self):
         return self.TXT_DIR 
+    
+    def get_xml_upload_dir(self):
+        return self.XML_UPLOAD_DIR
+
+    def get_xml_export_dir(self):
+        return self.XML_EXPORT_DIR
+    
+    def get_connections_dir(self):
+        return self.CONNECTIONS_DIR
+
+    def get_template_dir(self):
+        return self.TEMPLATE_DIR
+
+    def get_json_dir(self):
+        return self.JSON_DIR
+
+    def get_csv_dir(self):
+        return self.CSV_DIR
+
+    def get_filetypes(self):
+        return self.FILETYPES
+    

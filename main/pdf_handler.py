@@ -50,7 +50,7 @@ class DataExtract:
         with pymupdf.open(path_to_pdf) as doc:
             text = chr(12).join([page.get_text() for page in doc])
             pathlib.Path(
-                f"{pf.TXT_DIR}extracted_text/{new_file}-{self.current_date}" + ".txt").write_bytes(text.encode())
+                f"{path_finder.get_text_dir()}extracted_text/{new_file}-{self.current_date}" + ".txt").write_bytes(text.encode())
             while not pathlib.Path(new_file):
                 try:
                     file_path = pathlib.Path(f"{new_file}")
@@ -100,7 +100,7 @@ class DataExtract:
         :return:
         """
         path_to_file = kwargs['file_path']
-        app_data = self.convert_csv(path_to_file='data/csv_files/product_data.csv')
+        app_data = self.convert_csv(path_to_file=f'{path_finder.get_csv_dir()}product_data.csv')
         new_list = []
         with open(f'{path_to_file}', 'r') as doc:
             user_data = doc.readlines()

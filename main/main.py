@@ -15,7 +15,7 @@ def get_user_input(prompt):
     
     if prompt == 1:
         # Create JSON file from a XML upload. Must be in draw.io XML format.
-        xml_filepath = fd.askopenfilename(initialdir='~/Documents', filetypes=FILETYPES)
+        xml_filepath = fd.askopenfilename(initialdir='~/Documents', filetypes=path_finder.get_filetypes())
         xml_obj = xml2json(xml_filepath)
         # Get name for new template. xml2json will place a timestamp and add the template to the database.
         template_name = input("Enter a name for the new template: ")
@@ -24,15 +24,15 @@ def get_user_input(prompt):
         pdf_convert.convert_pdf(new_file_name='pdf_extract')
     elif prompt == 3:
         # Get the list of current templates and render it to the user.
-        for i in view_templates():
+        for i in path_finder.view_templates():
             num_templates += 1
             print(f'\n[{num_templates}] {i}')
         choose_temp = int(input('\nPlease select a template to export: '))
         new_xml_file = str(input('\nPlease provide a name for your new draw.io diagram: '))
         # Render the draw.io XML file and write to disk.
-        for template in range(len(pf.export_json_templates())):
+        for template in range(len(path_finder.export_json_templates())):
             if choose_temp - 1 == template:
-                json_obj = json_to_xml(pf.export_json_templates()[template], f'{pf.XML_DIR}{new_xml_file}.drawio.xml') 
+                json_obj = json_to_xml(path_finder.export_json_templates()[template], f'{path_finder.get_xml_export_dir()}{new_xml_file}.drawio.xml') 
         print('\nsuccessfull export\n')
     elif prompt == 4:
         pass
@@ -43,7 +43,27 @@ def get_user_input(prompt):
     elif prompt == 6:
         pass
     else:
-        print("Please select an option 1-6")
+        print("Please select an option 1-7")
+
+
+def update_connections():
+    
+    pattern1 = r'\{\{.*?\}\}'
+
+
+    with open(path_var, 'r', encoding='utf-8') as new_connection:
+        data = json.load(new_connection)
+        
+        for keys, values in data["diagram"]["mxGraphModel"]["root"].items():
+            result = re.sub(pattern1, '{{test}}', str(values.get('value')))
+            values["value"] = result
+        
+        with open('/home/landotech/Documents/GitHub/drawmate.me/data/json_files/ConnectionsModuleTest.json',
+                  'w',
+                  encoding='utf-8') as update_connects:
+            json.dump(data, update_connects, indent=4)
+            print("Connections Updated")
+
 
 
 should_continue = True
