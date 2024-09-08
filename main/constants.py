@@ -14,7 +14,7 @@ class PathFinder:
         self.TXT_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/txt_files/'
         self.FILETYPES = (('xml files', '*.xml'), ('all files', '*.*')) 
 
-    def export_xml_files():
+    def export_xml_files(self):
         """Return the contents of the xml directory sorted by timestamp"""
         
         with os.scandir(self.XML_DIR) as entries:
@@ -23,7 +23,7 @@ class PathFinder:
         return sorted(file_paths, key=lambda x: os.path.getmtime(x)) 
 
 
-    def export_json_templates():
+    def export_json_templates(self):
         """Return the contents of the json directory sorted by timestamp""" 
         
         with os.scandir(self.JSON_DIR) as entries:
@@ -32,7 +32,7 @@ class PathFinder:
         return sorted(file_paths, key=lambda x: os.path.getmtime(x))
 
 
-    def export_template():
+    def export_template(self):
         """Return the latest entry in the template_list"""
         with open(f'{self.TEMPLATE_DIR}template_list.json', 'r', encoding='utf-8') as export:
             exported_data = json.load(export)
@@ -40,7 +40,7 @@ class PathFinder:
         return exported_data["templates"][-1]
 
 
-    def view_templates():
+    def view_templates(self):
         """Return a list of current templates"""
         
         with open(f'{self.TEMPLATE_DIR}template_list.json', 'r', encoding='utf-8') as view:
@@ -51,3 +51,5 @@ class PathFinder:
             
             return template_list
 
+    def get_text_dir(self):
+        return self.TXT_DIR 

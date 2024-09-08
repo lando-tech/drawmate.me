@@ -5,7 +5,7 @@ from json2xml import json_to_xml
 from constants import PathFinder as pf
 import time
 
-
+path_finder = pf()
 pdf_convert = DataExtract()
 
 
@@ -37,7 +37,7 @@ def get_user_input(prompt):
     elif prompt == 4:
         pass
     elif prompt == 5:
-        for i in view_templates():
+        for i in path_finder.view_templates():
             num_templates += 1
             print(f'\n\t[{num_templates}] {i}')
     elif prompt == 6:

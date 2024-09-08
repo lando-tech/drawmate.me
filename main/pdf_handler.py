@@ -10,13 +10,15 @@ import time
 
 
 FILETYPES = (('pdf files', '*.pdf'), ('all files', '*.*'))
+path_finder = pf()
+
 
 
 class DataExtract:
 
     def __init__(self):
         # Initialize list of file names stored in the data directory
-        self.file_names = os.listdir(pf.TXT_DIR)
+        self.file_names = os.listdir(path_finder.get_text_dir())
         # Initialize current date variable to add the date to the file name
         self.current_date = datetime.today()
 

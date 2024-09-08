@@ -11,5 +11,5 @@ with open(path_var, 'r', encoding='utf-8') as new_connection:
     data = json.load(new_connection)
     
     for keys, values in data["diagram"]["mxGraphModel"]["root"].items():
-        for value in values:
-            print(value)
+        result = re.sub(pattern1, '{{test}}', str(values.get('value')))
+        print(result)

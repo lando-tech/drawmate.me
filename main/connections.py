@@ -6,7 +6,6 @@ path_var = '/home/landotech/Documents/GitHub/drawmate.me/data/json_files/VideoNe
 pattern1 = r'\{\{.*?\}\}'
 
 
-
 av_connections = {}
 
 with open(path_var, 'r', encoding='utf-8') as new_connection:
@@ -29,5 +28,4 @@ for i in values_list:
 
 for conn in connections:
     print(conn)
-
 
