@@ -2,12 +2,11 @@ from tkinter import filedialog as fd
 from pdf_handler import DataExtract
 from xml2json import xml2json
 from json2xml import json_to_xml 
-from constants import *
+from constants import PathFinder as pf
 import time
 
-FILETYPES = (('xml files', '*.xml'), ('all files', '*.*'))
+
 pdf_convert = DataExtract()
-XML_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/xml_files/'
 
 
 def get_user_input(prompt):
@@ -31,15 +30,16 @@ def get_user_input(prompt):
         choose_temp = int(input('\nPlease select a template to export: '))
         new_xml_file = str(input('\nPlease provide a name for your new draw.io diagram: '))
         # Render the draw.io XML file and write to disk.
-        for template in range(len(export_json_templates())):
+        for template in range(len(pf.export_json_templates())):
             if choose_temp - 1 == template:
-                json_obj = json_to_xml(export_json_templates()[template], f'{XML_DIR}/{new_xml_file}.drawio.xml') 
-        print('successfull export\n')
+                json_obj = json_to_xml(pf.export_json_templates()[template], f'{pf.XML_DIR}{new_xml_file}.drawio.xml') 
+        print('\nsuccessfull export\n')
     elif prompt == 4:
         pass
     elif prompt == 5:
         for i in view_templates():
-            print(f'\n{i}')
+            num_templates += 1
+            print(f'\n\t[{num_templates}] {i}')
     elif prompt == 6:
         pass
     else:

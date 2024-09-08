@@ -1,39 +1,53 @@
 import os
 import json
 
-XML_DIRECTORY = '/home/landotech/Documents/GitHub/drawmate.me/data/xml_files/'
-TEMPLATE_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/templates/'
-JSON_DIRECTORY = '/home/landotech/Documents/GitHub/drawmate.me/data/json_files/'
 
+class PathFinder:
 
-def export_xml_files():
-    directory = XML_DIRECTORY
-    with os.scandir(directory) as entries:
-        file_paths = [entry.path for entry in entries if entry.is_file()]
+    def __init__(self):
+        # Path to the data directories to export to other modules
+        self.XML_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/xml_files/'
+        self.TEMPLATE_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/templates/'
+        self.JSON_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/json_files/'
+        self.CONNECTIONS_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/connections/'
+        self.CSV_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/csv_files/'
+        self.TXT_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/txt_files/'
+        self.FILETYPES = (('xml files', '*.xml'), ('all files', '*.*')) 
 
-    return sorted(file_paths, key=lambda x: os.path.getmtime(x)) 
-
-def export_json_templates():
-    directory = JSON_DIRECTORY
-    with os.scandir(directory) as entries:
-        file_paths = [entry.path for entry in entries if entry.is_file()]
-
-    return sorted(file_paths, key=lambda x: os.path.getmtime(x))
-
-def export_template():
-    with open('../data/templates/template_list.json', 'r') as export:
-        exported_data = json.load(export)
-
-    return exported_data["templates"][-1]
-
-
-def view_templates():
-    directory = TEMPLATE_DIR
-    with open(f'{directory}/template_list.json', 'r') as view:
-        template_view = json.load(view)
+    def export_xml_files():
+        """Return the contents of the xml directory sorted by timestamp"""
         
-        for key, value in template_view.items():
-            template_list = value
+        with os.scandir(self.XML_DIR) as entries:
+            file_paths = [entry.path for entry in entries if entry.is_file()]
+
+        return sorted(file_paths, key=lambda x: os.path.getmtime(x)) 
+
+
+    def export_json_templates():
+        """Return the contents of the json directory sorted by timestamp""" 
         
-        return template_list
+        with os.scandir(self.JSON_DIR) as entries:
+            file_paths = [entry.path for entry in entries if entry.is_file()]
+
+        return sorted(file_paths, key=lambda x: os.path.getmtime(x))
+
+
+    def export_template():
+        """Return the latest entry in the template_list"""
+        with open(f'{self.TEMPLATE_DIR}template_list.json', 'r', encoding='utf-8') as export:
+            exported_data = json.load(export)
+
+        return exported_data["templates"][-1]
+
+
+    def view_templates():
+        """Return a list of current templates"""
+        
+        with open(f'{self.TEMPLATE_DIR}template_list.json', 'r', encoding='utf-8') as view:
+            template_view = json.load(view)
+            
+            for key, value in template_view.items():
+                template_list = value
+            
+            return template_list
 
