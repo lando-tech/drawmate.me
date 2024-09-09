@@ -29,7 +29,7 @@ def get_user_input(prompt):
     elif prompt == 7:
         pass
     else:
-        print("Please select an option 1-7")
+        print("Please select an option 1-8")
 
 
 def choose_template():
@@ -45,7 +45,7 @@ def choose_template():
 
 
 def name_of_file():
-    file_name = str(input('\nPlease provide a name for your new draw.io diagram: '))
+    file_name = str(input('\nPlease provide a name for the file: '))
     return file_name
 
 
@@ -68,6 +68,7 @@ def update_connections():
 
 
 def export_as_xml():
+    # Iterate through templates and choose template based on user input to export
     template_choice = choose_template()
     new_xml_file = name_of_file()
     for template in range(len(path_finder.export_json_templates())):
@@ -89,12 +90,12 @@ def specify_file_type():
     arg2_outpath = None
     arg3_inpath = None
 
-    to_upload = input("Would you like to upload a file? If yes type (y) or type (view) to select from a template: ").lower()
+    to_upload = input("Would you like to upload a drawio file? If yes type (y) or type (view) to select from a template: ").lower()
 
     if to_upload == "y":
         arg3_inpath = fd.askopenfilename(initialdir='~/Documents', filetypes=path_finder.get_filetypes())
     elif to_upload == "view":
-        arg3_inpath = "/home/landotech/Documents/GitHub/drawmate.me/data/xml_files/xml_exports/VideoCodecTest.drawio.xml"
+        choose_template()
     
     export_type = int(input(""
                 "\n\tChoose a filetype:\n"

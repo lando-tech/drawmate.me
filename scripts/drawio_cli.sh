@@ -10,8 +10,8 @@ out_path="$2"
 in_path="$3"
 
 # Convert the file and capture error logs
-drawio --export --format $format --output $out_path $in_path > /home/landotech/Documents/GitHub/drawmate.me/logs/bash_script_logs/drawio_logs.log 2>&1
+drawio --export --format $format --output $out_path $in_path > /home/landotech/Documents/GitHub/drawmate.me/logs/bash_script_logs/drawio_logs.txt 2>&1
 
 # confirm
-echo conversion complete
+echo conversion complete!
 

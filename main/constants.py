@@ -19,14 +19,20 @@ class PathFinder:
         self.SVG_DIR = '/home/landotech/Documents/GitHub/drawmate.me/data/svg_files/'
         self.FILETYPES = (('xml files', '*.xml'), ('all files', '*.*')) 
 
-    def export_xml_files(self):
-        """Return the contents of the xml directory sorted by timestamp"""
+    def get_xml_exports(self):
+        """Return the contents of the xml exports dir, sorted by timestamp"""
         
-        with os.scandir(self.XML_DIR) as entries:
+        with os.scandir(self.XML_EXPORT_DIR) as entries:
             file_paths = [entry.path for entry in entries if entry.is_file()]
 
         return sorted(file_paths, key=lambda x: os.path.getmtime(x)) 
 
+    def get_xml_uploads(self):
+        """Return the contents of the xml uploads dir, sorted by timestamp"""
+        with os.scandir(self.XML_UPLOAD_DIR) as entries:
+            file_paths = [entry.path for entry in entries if entry.is_file()]
+
+        return sorted(file_paths, key=lambda x: os.path.getmtime(x)) 
 
     def export_json_templates(self):
         """Return the contents of the json directory sorted by timestamp""" 
