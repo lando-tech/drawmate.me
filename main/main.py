@@ -5,6 +5,8 @@ from json2xml import json_to_xml
 from constants import PathFinder as pf
 import time
 import subprocess
+import json
+import re
 
 path_finder = pf()
 pdf_convert = DataExtract()
@@ -49,7 +51,7 @@ def name_of_file():
     return file_name
 
 
-def update_connections():
+"""def update_connections():
     
     pattern1 = r'\{\{.*?\}\}'
 
@@ -64,7 +66,7 @@ def update_connections():
                   'w',
                   encoding='utf-8') as update_connects:
             json.dump(data, update_connects, indent=4)
-            print("Connections Updated")
+            print("Connections Updated")"""
 
 
 def export_as_xml():
@@ -73,7 +75,8 @@ def export_as_xml():
     new_xml_file = name_of_file()
     for template in range(len(path_finder.export_json_templates())):
         if template_choice - 1 == template:
-            json_obj = json_to_xml(path_finder.export_json_templates()[template], f'{path_finder.get_xml_export_dir()}{new_xml_file}.drawio.xml') 
+            json_to_xml(path_finder.export_json_templates()[template], f'{path_finder.get_xml_export_dir()}{new_xml_file}.drawio.xml') 
+     
 
 
 def convert_xml():
@@ -95,8 +98,9 @@ def specify_file_type():
     if to_upload == "y":
         arg3_inpath = fd.askopenfilename(initialdir='~/Documents', filetypes=path_finder.get_filetypes())
     elif to_upload == "view":
-        choose_template()
-    
+        export_as_xml()
+        arg3_inpath = path_finder.get_xml_exports()[-1]
+
     export_type = int(input(""
                 "\n\tChoose a filetype:\n"
                 "\t[1] HTML\n"
