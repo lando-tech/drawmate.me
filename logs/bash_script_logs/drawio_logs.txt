@@ -1,0 +1,69 @@
+
+(drawio:54587): Gtk-WARNING **: 11:02:03.905: Theme parsing error: gtk.css:1413:23: 'font-feature-settings' is not a valid property name
+
+(drawio:54587): Gtk-WARNING **: 11:02:03.909: Theme parsing error: gtk.css:3286:25: 'font-feature-settings' is not a valid property name
+
+(drawio:54587): Gtk-WARNING **: 11:02:03.910: Theme parsing error: gtk.css:3748:23: 'font-feature-settings' is not a valid property name
+libGL error: MESA-LOADER: failed to open radeonsi (search paths /snap/drawio/226/gnome-platform/usr/lib/x86_64-linux-gnu/dri)
+libGL error: failed to load driver: radeonsi
+libGL error: MESA-LOADER: failed to open swrast (search paths /snap/drawio/226/gnome-platform/usr/lib/x86_64-linux-gnu/dri)
+libGL error: failed to load driver: swrast
+[54681:0910/110204.963857:ERROR:angle_platform_impl.cc(44)] Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+ERR: Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+[54681:0910/110204.964452:ERROR:gl_display.cc(497)] EGL Driver message (Critical) eglInitialize: Could not create a backing OpenGL context.
+[54681:0910/110204.964563:ERROR:gl_display.cc(767)] eglInitialize OpenGL failed with error EGL_NOT_INITIALIZED, trying next display type
+[54681:0910/110204.965713:ERROR:angle_platform_impl.cc(44)] Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+ERR: Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+[54681:0910/110204.965767:ERROR:gl_display.cc(497)] EGL Driver message (Critical) eglInitialize: Could not create a backing OpenGL context.
+[54681:0910/110204.965801:ERROR:gl_display.cc(767)] eglInitialize OpenGLES failed with error EGL_NOT_INITIALIZED
+[54681:0910/110204.965833:ERROR:gl_display.cc(801)] Initialization of all EGL display types failed.
+[54681:0910/110204.965867:ERROR:gl_ozone_egl.cc(26)] GLDisplayEGL::Initialize failed.
+[54681:0910/110204.969067:ERROR:angle_platform_impl.cc(44)] Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+ERR: Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+[54681:0910/110204.969138:ERROR:gl_display.cc(497)] EGL Driver message (Critical) eglInitialize: Could not create a backing OpenGL context.
+[54681:0910/110204.969170:ERROR:gl_display.cc(767)] eglInitialize OpenGL failed with error EGL_NOT_INITIALIZED, trying next display type
+[54681:0910/110204.969896:ERROR:angle_platform_impl.cc(44)] Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+ERR: Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+[54681:0910/110204.969938:ERROR:gl_display.cc(497)] EGL Driver message (Critical) eglInitialize: Could not create a backing OpenGL context.
+[54681:0910/110204.969977:ERROR:gl_display.cc(767)] eglInitialize OpenGLES failed with error EGL_NOT_INITIALIZED
+[54681:0910/110204.970010:ERROR:gl_display.cc(801)] Initialization of all EGL display types failed.
+[54681:0910/110204.970042:ERROR:gl_ozone_egl.cc(26)] GLDisplayEGL::Initialize failed.
+[54681:0910/110204.975896:ERROR:viz_main_impl.cc(166)] Exiting GPU process due to errors during initialization
+
+(drawio:54587): Gtk-WARNING **: 11:02:05.192: Theme parsing error: gtk-dark.css:1413:23: 'font-feature-settings' is not a valid property name
+
+(drawio:54587): Gtk-WARNING **: 11:02:05.197: Theme parsing error: gtk-dark.css:3286:25: 'font-feature-settings' is not a valid property name
+
+(drawio:54587): Gtk-WARNING **: 11:02:05.198: Theme parsing error: gtk-dark.css:3748:23: 'font-feature-settings' is not a valid property name
+libGL error: MESA-LOADER: failed to open radeonsi (search paths /snap/drawio/226/gnome-platform/usr/lib/x86_64-linux-gnu/dri)
+libGL error: failed to load driver: radeonsi
+libGL error: MESA-LOADER: failed to open swrast (search paths /snap/drawio/226/gnome-platform/usr/lib/x86_64-linux-gnu/dri)
+libGL error: failed to load driver: swrast
+[54709:0910/110205.316441:ERROR:angle_platform_impl.cc(44)] Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+ERR: Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+[54709:0910/110205.316564:ERROR:gl_display.cc(497)] EGL Driver message (Critical) eglInitialize: Could not create a backing OpenGL context.
+[54709:0910/110205.316608:ERROR:gl_display.cc(767)] eglInitialize OpenGL failed with error EGL_NOT_INITIALIZED, trying next display type
+[54709:0910/110205.317411:ERROR:angle_platform_impl.cc(44)] Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+ERR: Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+[54709:0910/110205.317465:ERROR:gl_display.cc(497)] EGL Driver message (Critical) eglInitialize: Could not create a backing OpenGL context.
+[54709:0910/110205.317506:ERROR:gl_display.cc(767)] eglInitialize OpenGLES failed with error EGL_NOT_INITIALIZED
+[54709:0910/110205.317546:ERROR:gl_display.cc(801)] Initialization of all EGL display types failed.
+[54709:0910/110205.317588:ERROR:gl_ozone_egl.cc(26)] GLDisplayEGL::Initialize failed.
+[54709:0910/110205.320617:ERROR:angle_platform_impl.cc(44)] Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+ERR: Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+[54709:0910/110205.320709:ERROR:gl_display.cc(497)] EGL Driver message (Critical) eglInitialize: Could not create a backing OpenGL context.
+[54709:0910/110205.320749:ERROR:gl_display.cc(767)] eglInitialize OpenGL failed with error EGL_NOT_INITIALIZED, trying next display type
+[54709:0910/110205.321523:ERROR:angle_platform_impl.cc(44)] Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+ERR: Display.cpp:1083 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+[54709:0910/110205.321575:ERROR:gl_display.cc(497)] EGL Driver message (Critical) eglInitialize: Could not create a backing OpenGL context.
+[54709:0910/110205.321614:ERROR:gl_display.cc(767)] eglInitialize OpenGLES failed with error EGL_NOT_INITIALIZED
+[54709:0910/110205.321651:ERROR:gl_display.cc(801)] Initialization of all EGL display types failed.
+[54709:0910/110205.321690:ERROR:gl_ozone_egl.cc(26)] GLDisplayEGL::Initialize failed.
+[54709:0910/110205.322955:ERROR:viz_main_impl.cc(166)] Exiting GPU process due to errors during initialization
+MESA-LOADER: failed to open radeonsi (search paths /snap/drawio/226/gnome-platform/usr/lib/x86_64-linux-gnu/dri)
+failed to load driver: radeonsi
+MESA-LOADER: failed to open kms_swrast (search paths /snap/drawio/226/gnome-platform/usr/lib/x86_64-linux-gnu/dri)
+failed to load driver: kms_swrast
+MESA-LOADER: failed to open swrast (search paths /snap/drawio/226/gnome-platform/usr/lib/x86_64-linux-gnu/dri)
+failed to load swrast driver
+/home/landotech/Documents/GitHub/drawmate.me/data/xml_files/xml_exports/AudioCodecDrawioCliTest.drawio.xml -> /home/landotech/Documents/GitHub/drawmate.me/data/pdf_files/AudioCodecPDF.pdf
