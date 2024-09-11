@@ -19,7 +19,7 @@ def get_user_input(prompt):
         pdf_convert.convert_pdf(new_file_name='pdf_extract')
     elif prompt == 3:
         export_as_xml()
-        print('\nsuccessfull export\n')
+        print('\nsuccessfully exported\n')
     elif prompt == 4:
         specify_file_type()
     elif prompt == 5:
@@ -59,7 +59,7 @@ def update_connections():
         for keys, values in data["diagram"]["mxGraphModel"]["root"].items():
             result = re.sub(pattern1, '{{test}}', str(values.get('value')))
             values["value"] = result
-        
+
         with open('/home/landotech/Documents/GitHub/drawmate.me/data/json_files/ConnectionsModuleTest.json',
                   'w',
                   encoding='utf-8') as update_connects:
