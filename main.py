@@ -1,7 +1,7 @@
 from tkinter import filedialog as fd
 from pdf_handler import DataExtract
 from xml2json import xml2json
-from json2xml import json_to_xml 
+from json2xml import json_to_xml
 from constants import PathFinder as pf
 import time
 import subprocess
@@ -12,7 +12,7 @@ pdf_convert = DataExtract()
 
 def get_user_input(prompt):
     # Receive user input and call the proper function. 
-    
+
     if prompt == 1:
         convert_xml()
     elif prompt == 2:
@@ -25,7 +25,7 @@ def get_user_input(prompt):
     elif prompt == 5:
         pass
     elif prompt == 6:
-        show_templates() 
+        show_templates()
     elif prompt == 7:
         pass
     else:
@@ -33,15 +33,14 @@ def get_user_input(prompt):
 
 
 def choose_template():
-    
     num_templates = 0
     # Get the list of current templates and render it to the user.
     for i in path_finder.view_templates():
         num_templates += 1
         print(f'\n[{num_templates}] {i}')
     chosen_temp = int(input('\nPlease select a template to export (Please type the number of the template): '))
-     
-    return chosen_temp 
+
+    return chosen_temp
 
 
 def name_of_file():
@@ -50,12 +49,11 @@ def name_of_file():
 
 
 def update_connections():
-    
     pattern1 = r'\{\{.*?\}\}'
 
     with open(path_var, 'r', encoding='utf-8') as new_connection:
         data = json.load(new_connection)
-        
+
         for keys, values in data["diagram"]["mxGraphModel"]["root"].items():
             result = re.sub(pattern1, '{{test}}', str(values.get('value')))
             values["value"] = result
@@ -73,7 +71,8 @@ def export_as_xml():
     new_xml_file = name_of_file()
     for template in range(len(path_finder.export_json_templates())):
         if template_choice - 1 == template:
-            json_obj = json_to_xml(path_finder.export_json_templates()[template], f'{path_finder.get_xml_export_dir()}{new_xml_file}.drawio.xml') 
+            json_obj = json_to_xml(path_finder.export_json_templates()[template],
+                                   f'{path_finder.get_xml_export_dir()}{new_xml_file}.drawio.xml')
 
 
 def convert_xml():
@@ -90,19 +89,20 @@ def specify_file_type():
     arg2_outpath = None
     arg3_inpath = None
 
-    to_upload = input("Would you like to upload a drawio file? If yes type (y) or type (view) to select from a template: ").lower()
+    to_upload = input(
+        "Would you like to upload a drawio file? If yes type (y) or type (view) to select from a template: ").lower()
 
     if to_upload == "y":
         arg3_inpath = fd.askopenfilename(initialdir='~/Documents', filetypes=path_finder.get_filetypes())
     elif to_upload == "view":
         choose_template()
-    
+
     export_type = int(input(""
-                "\n\tChoose a filetype:\n"
-                "\t[1] HTML\n"
-                "\t[2] PDF\n"
-                "\t[3] SVG\n"
-                "\t[4] PNG\n"))
+                            "\n\tChoose a filetype:\n"
+                            "\t[1] HTML\n"
+                            "\t[2] PDF\n"
+                            "\t[3] SVG\n"
+                            "\t[4] PNG\n"))
     if export_type == 1:
         arg1_format = "html"
         f_name = name_of_file()
@@ -120,9 +120,14 @@ def specify_file_type():
         f_name = name_of_file()
         arg2_outpath = f"{path_finder.get_png_dir()}{f_name}.png"
 
-        
     bash_script = '/home/landotech/Documents/GitHub/drawmate.me/scripts/drawio_cli.sh'
-    drawio_cli = subprocess.run([bash_script, arg1_format, arg2_outpath, arg3_inpath], capture_output=True, text=True)
+    drawio_cli = subprocess.run([
+                                 bash_script,
+                                 arg1_format,
+                                 arg2_outpath,
+                                 arg3_inpath],
+                                capture_output=True,
+                                text=True)
     print(f"\nstdout: {drawio_cli.stdout}\nstderr: {drawio_cli.stderr}\n")
 
 
@@ -153,4 +158,3 @@ while should_continue:
         break
     else:
         get_user_input(prompt)
-
