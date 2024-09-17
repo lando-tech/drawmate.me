@@ -2,11 +2,9 @@ from tkinter import filedialog as fd
 from pdf_handler import DataExtract
 from xml2json import xml2json
 from json2xml import json2xml 
-from constants import PathFinder as pf
+from pathfinder import PathFinder as pf
 import time
 import subprocess
-import json
-import re
 
 path_finder = pf()
 pdf_convert = DataExtract()
