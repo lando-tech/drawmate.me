@@ -44,7 +44,7 @@ def update_connections(path_var):
             result = re.sub(pattern1, '{{test}}', str(values.get('value')))
             values["value"] = result
         
-        with open('/home/landotech/Documents/GitHub/drawmate.me/data/json_files/ConnectionsModuleTest.json',
+        with open('<file path>',
                   'w',
                   encoding='utf-8') as update_connects:
             json.dump(data, update_connects, indent=4)

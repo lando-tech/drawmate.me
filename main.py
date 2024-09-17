@@ -1,3 +1,5 @@
+# Simple cli prompt to run tests on each module and ensure proper functionality
+
 from tkinter import filedialog as fd
 from pdf_handler import DataExtract
 from xml2json import xml2json

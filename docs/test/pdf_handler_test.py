@@ -1,7 +1,8 @@
 from datetime import datetime
 from tkinter import filedialog as fd
-from pathfinder import PathFinder as pf
+from xml.etree import ElementTree as et
 import pandas as pd
+import json
 import pathlib
 import pymupdf
 import re
@@ -10,15 +11,13 @@ import time
 
 
 FILETYPES = (('pdf files', '*.pdf'), ('all files', '*.*'))
-path_finder = pf()
-
 
 
 class DataExtract:
 
     def __init__(self):
         # Initialize list of file names stored in the data directory
-        self.file_names = os.listdir(path_finder.get_text_dir())
+        self.file_names = os.listdir('data/txt_files/extracted_text')
         # Initialize current date variable to add the date to the file name
         self.current_date = datetime.today()
 
@@ -50,7 +49,7 @@ class DataExtract:
         with pymupdf.open(path_to_pdf) as doc:
             text = chr(12).join([page.get_text() for page in doc])
             pathlib.Path(
-                f"{path_finder.get_text_dir()}extracted_text/{new_file}-{self.current_date}" + ".txt").write_bytes(text.encode())
+                f"data/txt_files/extracted_text/{new_file}-{self.current_date}" + ".txt").write_bytes(text.encode())
             while not pathlib.Path(new_file):
                 try:
                     file_path = pathlib.Path(f"{new_file}")
@@ -100,7 +99,7 @@ class DataExtract:
         :return:
         """
         path_to_file = kwargs['file_path']
-        app_data = self.convert_csv(path_to_file=f'{path_finder.get_csv_dir()}product_data.csv')
+        app_data = self.convert_csv(path_to_file='data/csv_files/product_data.csv')
         new_list = []
         with open(f'{path_to_file}', 'r') as doc:
             user_data = doc.readlines()
