@@ -1,9 +1,10 @@
+# Initialize imports
 import json
 
 from xml.etree import ElementTree as et
 from datetime import datetime
 from os import path
-from constants import PathFinder as pf
+from pathfinder import PathFinder as pf
 
 
 # noinspection PyTypeChecker
@@ -12,9 +13,11 @@ class xml2json:
     def __init__(self, file_path):
         self.file_path = file_path
         self.timestamp = datetime.today()
+
         self.xml_string = et.fromstring(self._read_file_as_bytes())
         self.tree = et.parse(f'{self.file_path}')
         self.root = self.tree.getroot()
+
         self.current_template = None
         self.template_dict = {"templates": []}
         self.mxcell_connections = {"cell_connections": []} 
@@ -28,6 +31,8 @@ class xml2json:
                 }
             }
 
+        self.path_finder = pf() 
+        
     def _read_file_as_bytes(self):
         # Read the file as bytes to ensure data remains unchanged during extraction
         with open(self.file_path, 'rb') as xml_file:
@@ -77,7 +82,7 @@ class xml2json:
 
     def write_json(self, temp_name: str):
         # Write the json file to disk to store as a future template
-        with open(f'../data/json_files/{self.get_current_template(temp_name)}', 'w') as cell:
+        with open(f'{self.path_finder.get_json_dir()}{self.get_current_template(temp_name)}', 'w') as cell:
             json.dump(obj=self.create_dict(), fp=cell, indent=4, ensure_ascii=False)
 
         self.get_template_dict(temp_name)
@@ -93,34 +98,35 @@ class xml2json:
         return self.current_template
 
     def get_template_dict(self, temp_name: str):
+        # Returns the template dictionary
         self.template_dict["templates"].append(self.get_current_template(temp_name))
         return self.template_dict
 
     def create_json_template(self, temp_name: str):
         # Update template if none is present, else create template
-        if (path.exists('../data/templates/template_list.json')
-                and path.getsize('../data/templates/template_list.json') > 0):
+        if (path.exists(f'{self.path_finder.get_template_dir()}template_list.json')
+                and path.getsize(f'{self.path_finder.get_template_dir()}template_list.json') > 0):
             self.update_json_template(temp_name)
         else:
-            with open('../data/templates/template_list.json', 'w') as temp:
+            with open(f'{self.path_finder.get_template_dir()}template_list.json', 'w') as temp:
                 json.dump(self.template_dict, temp, indent=4)
                 print("file saved to disk")
 
     def update_json_template(self, temp_name: str):
         # Update current list of templates inside the json file
-        with open('../data/templates/template_list.json', 'r') as temp_list:
+        with open(f'{self.path_finder.get_template_dir()}template_list.json', 'r') as temp_list:
             loaded_list = json.load(temp_list)
             for key, value in loaded_list.items():
                 value.append(self.get_current_template(temp_name))
                 updated_json = {"templates": value}
-                with open('../data/templates/template_list.json', 'w') as update:
+                with open(f'{self.path_finder.get_template_dir()}template_list.json', 'w') as update:
                     json.dump(updated_json, update, indent=4)
 
     def update_connections_list(self, cell):
         self.mxcell_connections["cell_connections"].append(cell)
     
     def write_connections_json(self, connect_list):
-        connect_path = '/home/landotech/Documents/GitHub/drawmate.me/data/connections/connections.json'
+        connect_path = f'{self.path_finder.get_json_dir()}connections.json'
         if path.exists(connect_path) and path.getsize(connect_path) > 0:
             with open(connect_path, 'r') as cell_update:
                 current_cell_data = json.load(cell_update)
@@ -132,3 +138,4 @@ class xml2json:
         else:
             with open(connect_path, 'w', encoding='utf-8') as init_connections:
                 json.dump(connect_list, init_connections)
+

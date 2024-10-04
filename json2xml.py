@@ -11,49 +11,53 @@ except ImportError:
     print("running with Python's standard xml.etree.ElementTree")
 
 
-def json_to_dict(json_data):
-    """Convert JSON data to Python dictionary."""
-    return json.loads(json_data)
+class JsonUtils:
 
+    def __init__(self) -> None:
+        pass
 
-def dict_to_xml(tag, d):
-    """Convert a dictionary to XML, handling CDATA and preserving structure."""
-    elem = Element(tag)
-    for key, val in d.items():
-        # remove number id from mxCell and mxPoint
-        if re.match(r'mxCell-\d+', key):
-            key = 'mxCell'
-        elif re.match(r'mxPoint-\d+', key):
-            key = 'mxPoint'
+    def json_to_dict(self, json_data):
+        """Convert JSON data to Python dictionary."""
+        return json.loads(json_data)
 
-        if isinstance(val, dict):
-            child = dict_to_xml(key, val)
-            elem.append(child)
-        elif isinstance(val, list):
-            for sub_d in val:
-                child = dict_to_xml(key, sub_d)
+    def dict_to_xml(self, tag, d):
+        """Convert a dictionary to XML, handling CDATA and preserving structure."""
+        elem = Element(tag)
+        for key, val in d.items():
+            # remove number id from mxCell and mxPoint
+            if re.match(r'mxCell-\d+', key):
+                key = 'mxCell'
+            elif re.match(r'mxPoint-\d+', key):
+                key = 'mxPoint'
+
+            if isinstance(val, dict):
+                child = self.dict_to_xml(key, val)
                 elem.append(child)
-        elif key == 'text':  # Handle text content separately
-            elem.text = etree.CDATA(val)  # Wrap text in CDATA if needed
-        else:
-            elem.set(key, val)
-    return elem
+            elif isinstance(val, list):
+                for sub_d in val:
+                    child = self.dict_to_xml(key, sub_d)
+                    elem.append(child)
+            elif key == 'text':  # Handle text content separately
+                elem.text = etree.CDATA(val)  # Wrap text in CDATA if needed
+            else:
+                elem.set(key, val)
+        return elem
 
 
-def json2xml(json_file_path, xml_file_path):
-    """Convert JSON file to XML file."""
-    with open(json_file_path, 'r', encoding='utf-8') as json_file:
-        json_data = json_file.read()
+    def json2xml(self, json_file_path, xml_file_path):
+        """Convert JSON file to XML file."""
+        with open(json_file_path, 'r', encoding='utf-8') as json_file:
+            json_data = json_file.read()
 
-    data = json_to_dict(json_data)
+        data = self.json_to_dict(json_data)
 
-    root_tag = "mxfile"  # Adjust as needed based on data
-    xml_root = dict_to_xml(root_tag, data)
+        root_tag = "mxfile"  # Adjust as needed based on data
+        xml_root = self.dict_to_xml(root_tag, data)
 
-    tree = ElementTree(xml_root)
-    tree.write(xml_file_path,
-               encoding='utf-8',
-               xml_declaration=True,
-               pretty_print=True)
+        tree = ElementTree(xml_root)
+        tree.write(xml_file_path,
+                   encoding='utf-8',
+                   xml_declaration=True,
+                   pretty_print=True)
 
 

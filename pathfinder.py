@@ -6,18 +6,25 @@ class PathFinder:
 
     def __init__(self):
         # Path to the data directories to export to other modules
-        self.XML_EXPORT_DIR = ''
-        self.XML_UPLOAD_DIR = ''
-        self.TEMPLATE_DIR = ''
-        self.JSON_DIR = ''
-        self.CONNECTIONS_DIR = ''
-        self.CSV_DIR = ''
-        self.TXT_DIR = ''
-        self.HTML_DIR = ''
-        self.PDF_DIR = ''
-        self.PNG_DIR = ''
-        self.SVG_DIR = ''
+        self.XML_EXPORT_DIR = f'{self.get_project_dir()}/data/xml_files/xml_exports/'
+        self.XML_UPLOAD_DIR = f'{self.get_project_dir()}/data/xml_files/xml_uploads/'
+        self.TEMPLATE_DIR = f'{self.get_project_dir()}/data/templates/'
+        self.JSON_DIR = f'{self.get_project_dir()}/data/json_files/'
+        self.CONNECTIONS_DIR = f'{self.get_project_dir()}/data/connections/'
+        self.CSV_DIR = f'{self.get_project_dir()}/data/csv_files/'
+        self.TXT_DIR = f'{self.get_project_dir()}/data/txt_files/'
+        self.HTML_DIR = f'{self.get_project_dir()}/data/html_files/'
+        self.PDF_DIR = f'{self.get_project_dir()}/data/pdf_files/'
+        self.PNG_DIR = f'{self.get_project_dir()}/data/png_files/'
+        self.SVG_DIR = f'{self.get_project_dir()}/data/svg_files/'
+        self.SCRIPTS_DIR = f'{self.get_project_dir()}/scripts/drawio_cli.sh'
         self.FILETYPES = (('xml files', '*.xml'), ('all files', '*.*')) 
+    
+    def get_project_dir(self):
+        """Return the root directory of the project"""
+        path_finder_dir = os.path.dirname(os.path.abspath(__file__))
+
+        return path_finder_dir
 
     def get_xml_exports(self):
         """Return the contents of the xml exports dir, sorted by timestamp"""
@@ -98,3 +105,5 @@ class PathFinder:
     def get_filetypes(self):
         return self.FILETYPES
     
+    def get_script_dir(self):
+        return self.SCRIPTS_DIR
