@@ -18,7 +18,11 @@ class PathFinder:
         self.PNG_DIR = f'{self.get_project_dir()}/data/png_files/'
         self.SVG_DIR = f'{self.get_project_dir()}/data/svg_files/'
         self.SCRIPTS_DIR = f'{self.get_project_dir()}/scripts/drawio_cli.sh'
-        self.FILETYPES = (('xml files', '*.xml'), ('all files', '*.*')) 
+        self.COLOR_PALLETE_TOML = f'{self.get_project_dir()}/color_pallete.toml'
+        self.CONFIG_TOML = f'{self.get_project_dir()}/config.toml'
+        self.FILETYPES = [(('xml files', '*.xml'), ('all files', '*.*')),
+                          (('json files', '*.json'), ('all files', '*.*')),
+                          (('pdf files', '*.pdf'), ('all files', '*.*')),]
     
     def get_project_dir(self):
         """Return the root directory of the project"""
@@ -60,7 +64,7 @@ class PathFinder:
 
     def view_templates(self):
         """Return a list of current templates"""
-        
+        template_list = None 
         with open(f'{self.TEMPLATE_DIR}template_list.json', 'r', encoding='utf-8') as view:
             template_view = json.load(view)
             
@@ -69,41 +73,3 @@ class PathFinder:
             
             return template_list
     
-    def get_html_dir(self):
-        return self.HTML_DIR
-    
-    def get_pdf_dir(self):
-        return self.PDF_DIR
-
-    def get_png_dir(self):
-        return self.PNG_DIR
-
-    def get_svg_dir(self):
-        return self.SVG_DIR
-
-    def get_text_dir(self):
-        return self.TXT_DIR 
-    
-    def get_xml_upload_dir(self):
-        return self.XML_UPLOAD_DIR
-
-    def get_xml_export_dir(self):
-        return self.XML_EXPORT_DIR
-    
-    def get_connections_dir(self):
-        return self.CONNECTIONS_DIR
-
-    def get_template_dir(self):
-        return self.TEMPLATE_DIR
-
-    def get_json_dir(self):
-        return self.JSON_DIR
-
-    def get_csv_dir(self):
-        return self.CSV_DIR
-
-    def get_filetypes(self):
-        return self.FILETYPES
-    
-    def get_script_dir(self):
-        return self.SCRIPTS_DIR
