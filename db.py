@@ -3,46 +3,72 @@ import sqlite3
 
 class MyDB:
 
-    def __init__(self, db_name: str, table_name: str) -> None:
+    def __init__(self) -> None:
+        pass
+
+    def initialize_database(self, db_name, table_name):
         # Establish connection with database
-        self.conn = sqlite3.connect(db_name)
-        self.cursor = self.conn.cursor()
+        conn = sqlite3.connect(db_name)
+        cursor = conn.cursor()
         # Declare table name
-        self.t_name = table_name
+        t_name = table_name
         # Create table
-        self.cursor.execute(
-                f'''CREATE TABLE IF NOT EXISTS {self.t_name}
+        cursor.execute(
+                f'''CREATE TABLE IF NOT EXISTS {t_name}
                 (id INTEGER PRIMARY KEY, input TEXT, output TEXT)''')
         
         # Check if database is connected/created
-        if self.conn:
+        if conn:
             print('Databse initialized.\n')
 
-    def add_entry(self, i, o):
-        # Add database entry
-        self.cursor.execute(f"INSERT INTO {self.t_name} (input, output) VALUES (?, ?)", (i, o))
-        print("Entry added")
-        self.conn.commit()
-    
-    def delete_entry(self, entry_id):
-        # Delete database entry
-        self.cursor.execute(f"DELETE FROM {self.t_name} WHERE id = (?)", (entry_id,))
-        print("Entry deleted")
-        self.conn.commit()
+    def add_entry(self, i, o, db_name, t_name):
+        # Establish connection
+        conn = sqlite3.connect(db_name)
+        cursor = conn.cursor()
+        if conn:
+            print('Connection established\n')
 
-    def query_db(self):
+        # Add database entry
+        cursor.execute(f"INSERT INTO {t_name} (input, output) VALUES (?, ?)", (i, o))
+        print("Entry added\n")
+        conn.commit()
+    
+    def delete_entry(self, entry_id, db_name, t_name):
+        # Establish connection
+        conn = sqlite3.connect(db_name)
+        cursor = conn.cursor()
+        if conn:
+            print('Connection established\n')
+
+        # Delete database entry
+        cursor.execute(f"DELETE FROM {t_name} WHERE id = (?)", (entry_id,))
+        print("Entry deleted\n")
+        conn.commit()
+
+    def query_db(self, db_name, t_name):
+        # Establish connection
+        conn = sqlite3.connect(db_name)
+        cursor = conn.cursor()
+        if conn:
+            print('Connection established\n')
+
         # Query database and return rows to view all entries
-        self.conn.commit()
-        self.cursor.execute(f"SELECT * FROM {self.t_name}")
-        rows = self.cursor.fetchall()
+        conn.commit()
+        cursor.execute(f"SELECT * FROM {t_name}")
+        rows = cursor.fetchall()
+        # Print success message
+        print('Database query successfull\n')
         return rows 
         # for row in rows:
         #     print(f"{row[0]}\n")
 
-    def close_db(self):
+    def close_db(self, db_name, t_name):
+        conn = sqlite3.connect(db_name)
+        cursor = conn.cursor()
+
         # Close connection
-        self.conn.commit()
-        self.conn.close()
+        conn.commit()
+        conn.close()
         print("Connection closed.")
 
 
