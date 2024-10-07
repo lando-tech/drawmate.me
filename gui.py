@@ -25,8 +25,8 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         self.set_root_configs()
         
         # Initialize major UI components
-        self._init_main_frame()
         self._init_left_frame()
+        self._init_root_canvas()
         self._init_listbox()
 
         # Add menu bar
@@ -60,8 +60,8 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
                 )
 
         # Set window size
-        self.root.minsize(width=600, height=600)
-        self.root.maxsize(height=600)
+        self.root.minsize(width=600, height=400)
+        self.root.maxsize(height=400)
 
         # Set title
         self.root.title('drawmate.me')
@@ -69,6 +69,7 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
     def set_ttk_configs(self):
         # Set style for ttk widgets
         self.ttk_style = ttk.Style(self.root)
+        self.ttk_style.theme_use('alt')
 
         # Set style for notebook widget
         self.ttk_style.configure(
@@ -79,13 +80,26 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
                     padding=10,
                 )
 
+        self.ttk_style.map('TNotebook',
+                           background=[('selected',
+                                        self.config.color_pallete.get('red')),
+                                        ],
+                           foreground=[('selected',
+                                        self.config.color_pallete.get('white')),
+                                        ]
+                           )
+
+        self.ttk_style.configure('TNotebook.Tab',
+                                 background=self.config.color_pallete.get('light_grey'),
+                                 foreground=self.config.color_pallete.get('black'))
+
         # Set style for treeview widget
         self.ttk_style.configure(
                     'Treeview',
                     background=self.config.color_pallete.get('light_grey'),
                     foreground=self.config.color_pallete.get('white'),
                     font=self.config.font_regular,
-                )
+                    )
 
         # Set mapping for treeview widget
         self.ttk_style.map('Treeview',
@@ -93,23 +107,23 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
                                         self.config.color_pallete.get('red'))],
                            foreground=[('selected',
                                         self.config.color_pallete.get('white'))])
+    
+    def _init_root_canvas(self):
+        self.root_canvas = tk.Canvas(master=self.root)
+        self.root_canvas.pack(side='top', padx=10, pady=10)
 
-    def _init_main_frame(self):
-        # Configure main frame for top of app
-        self.main_frame = tk.Frame(master=self.root)
-        self.main_frame.pack(side='top', padx=20, pady=20)
-        self.main_frame.configure(relief='flat', borderwidth=1)
-        
-        # Configure welcome banner/label 
-        self.main_label = tk.Label(master=self.main_frame)
-        self.main_label.config(text='drawmate', font=self.config.font_large)
-        self.main_label.pack()
 
     def _init_left_frame(self):
         # Add frame to left side of window 
         self.l_frame = tk.Frame(master=self.root)
-        self.l_frame.pack(side='left', padx=10, pady=10)
+        self.l_frame.pack(side='top', padx=10, pady=10)
         self.l_frame.config(relief='flat', borderwidth=1)
+
+        # Add label to frame
+        self.main_label = tk.Label(master=self.l_frame)
+        self.main_label.config(text='drawmate', font=self.config.font_large)
+        self.main_label.pack()
+
         # Init menu buttons for l_frame
         self.upload_button_xml()
         self.upload_button_pdf()
@@ -126,26 +140,29 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         self.listbox_state = tk.BooleanVar(value=False)
 
         if self.listbox_state.get() == False:
-            self.listbox = tk.Listbox(master=self.l_frame)
+            self.listbox = tk.Listbox(master=self.root_canvas)
             self.listbox_state.set(value=True)
             self.listbox.config(selectmode='single',
                                 relief='flat',
                                 borderwidth=2,
                                 font=self.config.font_regular,
-                                activestyle='none')
+                                activestyle='none',
+                                )
+            self.listbox_label = tk.Label(master=self.root_canvas, text='JSON Templates:')
+            self.listbox_label.config(font=self.config.font_bold)
 
         if self.listbox_submit_state.get() == False:
             # Create listbox submit button
-            self.listbox_submit = tk.Button(master=self.l_frame)
+            self.listbox_submit = tk.Button(master=self.root_canvas)
             self.listbox_submit_state.set(value=True)
-            self.listbox_submit.configure(text='Submit Treeview',
+            self.listbox_submit.configure(text='Generate Treeview',
                                           relief='flat',
                                           command=self.submit_listbox_button,
                                           font=self.config.font_regular)
 
         if self.destroy_listbox_state.get() == False: 
             # Create listbox exit button
-            self.destroy_listbox = tk.Button(master=self.l_frame)        
+            self.destroy_listbox = tk.Button(master=self.root_canvas)        
             self.destroy_listbox_state.set(value=True)
             self.destroy_listbox.config(text='Close',
                                         command=self.drestroy_listbox,
@@ -202,7 +219,7 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
     def _init_tree_close_button(self):
         # Add button to close treeview 
         if not hasattr(self, 'tree_close_button'):
-            self.tree_close_button = tk.Button(master=self.root, command=self.close_tree)
+            self.tree_close_button = tk.Button(master=self.root_canvas, command=self.close_tree)
             self.tree_close_button.configure(text='Exit Treeview',
                                              relief='flat',
                                              borderwidth=2,
@@ -211,7 +228,7 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
             self.tree_close_button.pack(side='bottom', padx=10, pady=10)
 
         if self.tree_close_button_state.get() == False:
-            self.tree_close_button = tk.Button(master=self.root, command=self.close_tree)
+            self.tree_close_button = tk.Button(master=self.root_canvas, command=self.close_tree)
             self.tree_close_button.configure(text='Exit Treeview',
                                              relief='flat',
                                              borderwidth=2,
@@ -224,11 +241,12 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
             self.listbox.destroy()
             self.listbox_state.set(value=False)
 
-            # Destroy listbox buttons
+            # Destroy listbox buttons/labels
             self.listbox_submit.destroy()
             self.listbox_submit_state.set(value=False)
             self.destroy_listbox.destroy()
             self.destroy_listbox_state.set(value=False)
+            self.listbox_label.destroy()
 
     # Top Menu Bar
     def menu_bar(self):
@@ -250,7 +268,7 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
     def upload_button_xml(self):
         # Upload xml file to app and convert to json
         button = tk.Button(master=self.l_frame)
-        button.pack(padx=10, pady=10, expand=True)
+        button.pack(side='left', padx=10, pady=10, expand=True)
         button.config(text='Upload XML',
                       command=self.open_input_dialog_xml,
                       relief='flat',
@@ -260,7 +278,7 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
     def upload_button_pdf(self):
         # Button to upload pdf. File is passed to pdfhandler class to extract relevant data
         pdf_button = tk.Button(master=self.l_frame)
-        pdf_button.pack(padx=10, pady=10, expand=True)
+        pdf_button.pack(side='left', padx=10, pady=10, expand=True)
         pdf_button.config(text='Upload PDF',
                           command=self.open_input_dialog_pdf,
                           relief='flat',
@@ -270,7 +288,7 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
     def export_button_json(self):
         # Export json template to xml
         export_button = tk.Button(master=self.l_frame)
-        export_button.pack(padx=10, pady=10, expand=True)
+        export_button.pack(side='left', padx=10, pady=10, expand=True)
         export_button.config(text='Export JSON',
                              command=self.open_input_dialog_json,
                              relief='flat',
@@ -280,7 +298,7 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
     def view_templates_button(self):
         # Button to view json templates
         view_button = tk.Button(master=self.l_frame)
-        view_button.pack(padx=10, pady=10, expand=True)
+        view_button.pack(side='left', padx=10, pady=10, expand=True)
         view_button.config(text='View Templates',
                            command=self.view_templates,
                            relief='flat',
@@ -293,16 +311,18 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         # Get a list of templates from the template directory and pass it to the listbox
         if os.path.isdir(self.JSON_DIR):
             self.listbox.delete(0, tk.END)
-            for item in os.listdir(self.JSON_DIR):
-                self.listbox.insert(tk.END, item)
+            for item in self.export_json_templates():
+                strip_item = item.split('/')
+                self.listbox.insert(tk.END, strip_item[-1])
         else:
             print("Invalid path")
         
         # Init listbox and scrollbars
-        self.listbox.pack(padx=10, pady=10, side='top', fill='both')
-        self.listbox_submit.pack(side='right', padx=10, pady=10)
-        self.destroy_listbox.pack(padx=10, pady=10, side='left')
-        self.listbox.config(width=50, height=25)
+        self.listbox_label.pack(side='top', padx=10, pady=10)
+        self.listbox.pack(padx=10, pady=10, side='top')
+        self.destroy_listbox.pack(padx=10, pady=10, side='bottom')
+        self.listbox_submit.pack(side='bottom', padx=10, pady=10)
+        self.listbox.config(width=50, height=20)
     
     def upload_xml(self, file_path, temp_name):
         # Function call for upload button
@@ -384,10 +404,10 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
     def tree_view(self, json_data, tab_name):
         # Check if notebook1 has been initialized 
         if self.notebook1_state.get() == False:
-            self.notebook1 = ttk.Notebook(master=self.root)
+            self.notebook1 = ttk.Notebook(master=self.root_canvas)
             self.notebook1_state.set(value=True)
 
-        tab_frame = tk.Frame(master=self.notebook1)
+        tab_frame = ttk.Frame(master=self.notebook1)
         self.notebook1.add(tab_frame, text=tab_name)
        
         # Call tree function 
@@ -408,7 +428,7 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         create_tree(root_node, json_data)
 
         # Pack notebook1, tree, and button to close tree
-        self.notebook1.pack(side='right', padx=10, pady=10)
+        self.notebook1.pack(side='bottom', padx=10, pady=10)
         self.tree.pack(side='top', padx=10, pady=10)
 
     def close_tree(self):
@@ -451,9 +471,12 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
                 return listbox_select
                 
     def submit_listbox_button(self):
-        json_data = self.on_listbox_select().get('json_data')
-        tab_name = self.on_listbox_select().get('tab_name')
-        self.tree_view(json_data, tab_name)
+        if not self.listbox.curselection():
+            return
+        else: 
+            json_data = self.on_listbox_select().get('json_data')
+            tab_name = self.on_listbox_select().get('tab_name')
+            self.tree_view(json_data, tab_name)
 
 
 if __name__ == "__main__":

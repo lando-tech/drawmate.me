@@ -18,11 +18,12 @@ class PathFinder:
         self.PNG_DIR = f'{self.get_project_dir()}/data/png_files/'
         self.SVG_DIR = f'{self.get_project_dir()}/data/svg_files/'
         self.SCRIPTS_DIR = f'{self.get_project_dir()}/scripts/drawio_cli.sh'
-        self.COLOR_PALLETE_TOML = f'{self.get_project_dir()}/color_pallete.toml'
+        self.COLOR_PALLETE_TOML = f'{self.get_project_dir()}/data/color_palettes/color_palette.toml'
         self.CONFIG_TOML = f'{self.get_project_dir()}/config.toml'
         self.FILETYPES = [(('xml files', '*.xml'), ('all files', '*.*')),
                           (('json files', '*.json'), ('all files', '*.*')),
-                          (('pdf files', '*.pdf'), ('all files', '*.*')),]
+                          (('pdf files', '*.pdf'), ('all files', '*.*')),
+                          (('toml files', '*.toml'), ('all files', '*.*'))]
     
     def get_project_dir(self):
         """Return the root directory of the project"""

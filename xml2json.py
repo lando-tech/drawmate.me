@@ -12,7 +12,8 @@ class xml2json:
 
     def __init__(self, file_path):
         self.file_path = file_path
-        self.timestamp = datetime.today()
+        self.timestamp = datetime.now().replace(microsecond=0)
+        self.formatted_timestamp = self.timestamp.strftime("%Y-%m-%d_%H-%M-%S")
 
         self.xml_string = et.fromstring(self._read_file_as_bytes())
         self.tree = et.parse(f'{self.file_path}')
@@ -82,7 +83,7 @@ class xml2json:
 
     def write_json(self, temp_name: str):
         # Write the json file to disk to store as a future template
-        with open(f'{self.path_finder.get_json_dir()}{self.get_current_template(temp_name)}', 'w') as cell:
+        with open(f'{self.path_finder.JSON_DIR}{self.get_current_template(temp_name)}', 'w') as cell:
             json.dump(obj=self.create_dict(), fp=cell, indent=4, ensure_ascii=False)
 
         self.get_template_dict(temp_name)
@@ -94,7 +95,7 @@ class xml2json:
 
     def get_current_template(self, temp_name: str):
         # Returns the current template being created/updated
-        self.current_template = f"{temp_name}-{self.timestamp}.json"
+        self.current_template = f"{temp_name}_{self.formatted_timestamp}.json"
         return self.current_template
 
     def get_template_dict(self, temp_name: str):
@@ -104,29 +105,29 @@ class xml2json:
 
     def create_json_template(self, temp_name: str):
         # Update template if none is present, else create template
-        if (path.exists(f'{self.path_finder.get_template_dir()}template_list.json')
-                and path.getsize(f'{self.path_finder.get_template_dir()}template_list.json') > 0):
+        if (path.exists(f'{self.path_finder.TEMPLATE_DIR}template_list.json')
+                and path.getsize(f'{self.path_finder.TEMPLATE_DIR}template_list.json') > 0):
             self.update_json_template(temp_name)
         else:
-            with open(f'{self.path_finder.get_template_dir()}template_list.json', 'w') as temp:
+            with open(f'{self.path_finder.TEMPLATE_DIR}template_list.json', 'w') as temp:
                 json.dump(self.template_dict, temp, indent=4)
                 print("file saved to disk")
 
     def update_json_template(self, temp_name: str):
         # Update current list of templates inside the json file
-        with open(f'{self.path_finder.get_template_dir()}template_list.json', 'r') as temp_list:
+        with open(f'{self.path_finder.TEMPLATE_DIR}template_list.json', 'r') as temp_list:
             loaded_list = json.load(temp_list)
             for key, value in loaded_list.items():
                 value.append(self.get_current_template(temp_name))
                 updated_json = {"templates": value}
-                with open(f'{self.path_finder.get_template_dir()}template_list.json', 'w') as update:
+                with open(f'{self.path_finder.TEMPLATE_DIR}template_list.json', 'w') as update:
                     json.dump(updated_json, update, indent=4)
 
     def update_connections_list(self, cell):
         self.mxcell_connections["cell_connections"].append(cell)
     
     def write_connections_json(self, connect_list):
-        connect_path = f'{self.path_finder.get_json_dir()}connections.json'
+        connect_path = f'{self.path_finder.JSON_DIR}connections.json'
         if path.exists(connect_path) and path.getsize(connect_path) > 0:
             with open(connect_path, 'r') as cell_update:
                 current_cell_data = json.load(cell_update)

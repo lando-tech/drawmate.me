@@ -1,7 +1,7 @@
 import json
 import re
 
-        
+       
 
 def update_json(json_file_path):
     """Update JSON data based on the provided updates."""
@@ -34,16 +34,16 @@ update_json(json_file_path)
 
 
 def update_connections(path_var):
-    
+   
     pattern1 = r'\{\{.*?\}\}'
 
     with open(path_var, 'r', encoding='utf-8') as new_connection:
         data = json.load(new_connection)
-        
+       
         for keys, values in data["diagram"]["mxGraphModel"]["root"].items():
             result = re.sub(pattern1, '{{test}}', str(values.get('value')))
             values["value"] = result
-        
+       
         with open('<file path>',
                   'w',
                   encoding='utf-8') as update_connects:
