@@ -4,7 +4,7 @@ import json
 from xml.etree import ElementTree as et
 from datetime import datetime
 from os import path
-from pathfinder import PathFinder as pf
+from utils.pathfinder import PathFinder as pf
 
 
 # noinspection PyTypeChecker

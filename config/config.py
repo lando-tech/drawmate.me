@@ -1,5 +1,9 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import toml
-from pathfinder import PathFinder as pf
+from utils.pathfinder import PathFinder as pf
 
 
 class AppConfig(pf):

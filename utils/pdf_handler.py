@@ -1,6 +1,6 @@
 from datetime import datetime
 from tkinter import filedialog as fd
-from pathfinder import PathFinder as pf
+from utils.pathfinder import PathFinder as pf
 import pandas as pd
 import pathlib
 import pymupdf
