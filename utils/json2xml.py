@@ -63,4 +63,7 @@ class JsonUtils:
                    xml_declaration=True,
                    pretty_print=True)
 
-
+    def open_json(self, file_path):
+        with open(file_path, 'r', encoding='utf-8') as file:
+            data_dict = json.load(file)
+            return data_dict

@@ -1,9 +1,13 @@
-from pathfinder import PathFinder
-from xml2json import xml2json
-from json2xml import JsonUtils
-from pdf_handler import DataExtract
-from config import AppConfig
+import sys
 import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from utils.pathfinder import PathFinder
+from utils.xml2json import xml2json
+from utils.json2xml import JsonUtils
+from utils.pdf_handler import DataExtract
+from config.config import AppConfig
+
 import json
 import tkinter as tk
 from tkinter import filedialog as fd
@@ -22,6 +26,11 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         # Init root window
         self.root = tk.Tk()
 
+        # Declare listbox and listbox button's state values
+        self.listbox_submit_state = tk.BooleanVar(value=False)
+        self.listbox_destroy_state = tk.BooleanVar(value=False)
+        self.listbox_state = tk.BooleanVar(value=False)
+
         # Set configs
         self.config = AppConfig()
         self.set_root_configs()
@@ -38,11 +47,6 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         # Init notebook for tabular functions
         self.notebook1 = ttk.Notebook(self.root)
         self.notebook1_state = tk.BooleanVar(value=False)
-
-        # Declare listbox and listbox button's state values
-        self.listbox_submit_state = tk.BooleanVar(value=False)
-        self.listbox_destroy_state = tk.BooleanVar(value=False)
-        self.listbox_state = tk.BooleanVar(value=False)
 
         # Call mainloop
         self.root.mainloop()
@@ -115,7 +119,7 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
 
     def _init_root_canvas(self):
         self.root_canvas = tk.Canvas(master=self.root)
-        self.root_canvas.pack()
+        self.root_canvas.pack(padx=10, pady=10)
 
     def _init_menu_bar(self):
         # Create menu bar
@@ -133,17 +137,12 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         self.root.config(menu=menu_bar)
 
     def _init_canvas_1(self):
-        """
-        Initialize root canvas and declare the scrollbar.
-        """
-
-        # Init root canvas
+        # Init canvas 1
         self.canvas_1 = tk.Canvas(master=self.root_canvas)
-        self.canvas_1.config(width=self.root_canvas.winfo_width() / 2,
-                             height=self.root_canvas.winfo_height() / 2)
         self.canvas_1.pack(side='left', padx=10, pady=10)
 
     def _init_canvas_2(self):
+        # Init canvas 2
         self.canvas_2 = tk.Canvas(master=self.root_canvas)
         self.canvas_2.pack(side='left', padx=10, pady=10)
 
@@ -262,10 +261,6 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
                              borderwidth=2,
                              font=self.config.font_regular)
 
-    def export_json(self, file_path, xml_path):
-        # Function call for export button
-        self.json2xml(file_path, xml_path)
-
     def open_input_dialog_json(self):
         """
         Opens a filedialog in the JSON directory and retrieve user entry
@@ -290,9 +285,10 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         def submit():
             # Submit the template name and filepath to the upload function for processing
             file_name = entry_1.get()
-            xml_f_path = f'{self.XML_EXPORT_DIR}/{file_name}.drawio.xml'
+            xml_f_path = f'{self.XML_EXPORT_DIR}{file_name}.drawio.xml'
             dialog.destroy()
-            self.export_json(file_path, xml_f_path)
+            self.json2xml(file_path, xml_f_path)
+            print(f'{xml_f_path.split('/')[-1]} Created')
 
         # Submit button
         tk.Button(dialog, text='Submit', command=submit).pack()
@@ -308,16 +304,20 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
                            font=self.config.font_regular)
 
     def view_templates(self):
-
-        self._init_listbox()
-        # Get a list of templates from the template directory and pass it to the listbox
-        if os.path.isdir(self.JSON_DIR):
-            self.listbox.delete(0, tk.END)
-            for item in self.export_json_templates():
-                strip_item = item.split('/')
-                self.listbox.insert(tk.END, strip_item[-1])
-        else:
-            print("Invalid path")
+        directory_length = len(self.export_json_templates())
+        for i in range(directory_length):
+            self._init_listbox()
+            # Get a list of templates from the template directory and pass it to the listbox
+            if os.path.isdir(self.JSON_DIR):
+                self.listbox.delete(0, tk.END)
+                for item in self.export_json_templates():
+                    if '.git' in item:
+                        pass
+                    else:
+                        strip_item = item.split('/')
+                        self.listbox.insert(tk.END, strip_item[-1])
+            else:
+                print("Invalid path")
 
         # Init listbox and scrollbars
         self.listbox_label.pack(side='top', padx=10, pady=10)
@@ -330,9 +330,9 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         """
         Defines the listbox widget and configures basic elements/commands.
         """
-        self.listbox_state = tk.BooleanVar(value=False)
-        self.listbox_submit_state = tk.BooleanVar(value=False)
-        self.listbox_destroy_state = tk.BooleanVar(value=False)
+        # self.listbox_state = tk.BooleanVar(value=False)
+        # self.listbox_submit_state = tk.BooleanVar(value=False)
+        # self.listbox_destroy_state = tk.BooleanVar(value=False)
 
         # Ensure listbox_state is False, then repopulate the listbox
         # and reset state value
@@ -461,14 +461,17 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         # Destroy listbox widget
         self.listbox.destroy()
         self.listbox_state.set(value=False)
+        self.canvas_1.config()
 
         # Destroy listbox buttons/labels
-        self.listbox_submit.destroy()
-        self.listbox_submit_state.set(value=False)
-        self.destroy_listbox.destroy()
-        self.listbox_destroy_state.set(value=False)
         self.listbox_label.destroy()
+        self.listbox_submit.destroy()
+        self.destroy_listbox.destroy()
 
+        # Reset bool values for button states
+        self.listbox_destroy_state.set(value=False)
+        self.listbox_submit_state.set(value=False)
+        
     def _init_tree(self, tab_frame):
         """
         Function call to Instantiate treeview widget.
@@ -485,7 +488,7 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         self.tree.column('diagram',
                     width=400,
                     minwidth=200,
-                    stretch=tk.NO)
+                    stretch=tk.YES)
 
         # Set treevieew heading
         self.tree.heading('#0',
@@ -535,6 +538,9 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         # Call tree function
         self._init_tree(tab_frame)
 
+        # Init scrollbars
+        self.create_treeview_scrollbars(master=tab_frame) 
+
         # Insert root node to tree
         root_node = self.tree.insert('', 'end', text='mxfile')
 
@@ -553,6 +559,14 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
         # Pack notebook1(parent of tree) and tree
         self.notebook1.pack(side='bottom', padx=10, pady=10)
         self.tree.pack(side='top', padx=10, pady=10)
+
+    def create_treeview_scrollbars(self, master):
+        self.x_scroll = ttk.Scrollbar(master=master, orient='horizontal', command=self.tree.xview)
+        self.y_scroll = ttk.Scrollbar(master=master, orient='vertical', command=self.tree.yview)
+        self.y_scroll.pack(side='right', fill='y')
+        self.x_scroll.pack(side='bottom', fill='x')
+
+        self.tree.configure(xscrollcommand=self.x_scroll.set, yscrollcommand=self.y_scroll.set)
 
     def close_tree(self):
         """
@@ -574,6 +588,9 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
 
         # Update button state
         self.tree_close_button_state.set(value=False)
+
+        # Resize canvas
+        self.canvas_2.config(width=self.canvas_1.winfo_width(), height=self.canvas_1.winfo_height())
 
         print('Treeview destroyed')
 

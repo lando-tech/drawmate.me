@@ -5,17 +5,25 @@ from xml.etree import ElementTree as et
 from datetime import datetime
 from os import path
 from utils.pathfinder import PathFinder as pf
+from database.db import MyDB
 
 
 # noinspection PyTypeChecker
 class xml2json:
 
     def __init__(self, file_path):
+        # Establish connection to database
+        self.conn = MyDB()  
+
+        # Set filepath variable
         self.file_path = file_path
+        # Set timestamp for file naming/tracking
         self.timestamp = datetime.now().replace(microsecond=0)
         self.formatted_timestamp = self.timestamp.strftime("%Y-%m-%d_%H-%M-%S")
 
+        # Read the xml as a string
         self.xml_string = et.fromstring(self._read_file_as_bytes())
+        # Create xml tree
         self.tree = et.parse(f'{self.file_path}')
         self.root = self.tree.getroot()
 
@@ -85,9 +93,20 @@ class xml2json:
         # Write the json file to disk to store as a future template
         with open(f'{self.path_finder.JSON_DIR}{self.get_current_template(temp_name)}', 'w') as cell:
             json.dump(obj=self.create_dict(), fp=cell, indent=4, ensure_ascii=False)
+        
+        if 'Audio' in self.get_current_template(temp_name):
+            db_name = 'templates.db'
+            table_name = 'audio_templates' 
+            self.conn.initialize_database(db_name=db_name, table_name=table_name)
+            self.conn.add_entry(i=self.get_current_template(temp_name), o='Test', db_name=db_name, t_name=table_name)
+        elif 'Video' in self.get_current_template(temp_name):
+            db_name = 'templates.db'
+            table_name = 'video_templates' 
+            self.conn.initialize_database(db_name=db_name, table_name=table_name)
+            self.conn.add_entry(i=self.get_current_template(temp_name), o='Test', db_name=db_name, t_name=table_name)
 
-        self.get_template_dict(temp_name)
-        self.create_json_template(temp_name)
+            self.get_template_dict(temp_name)
+            self.create_json_template(temp_name)
 
     def from_string(self):
         # Returns the xml string as is to ensure proper encoding

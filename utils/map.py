@@ -1,7 +1,7 @@
 
 
 
-class MxfileTopo:
+class MxFileTopo:
 
     def __init__(self) -> None:
 
@@ -24,3 +24,4 @@ class MxfileTopo:
                 }
             }
         }
+

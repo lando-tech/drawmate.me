@@ -135,3 +135,9 @@ class DataExtract:
         #         continue
         #
         # return trimmed_list
+
+    def truncate_lines(self, text, max_length):
+        if len(text) > max_length:
+            return text[:max_length - 3] + "..."
+        return text
+

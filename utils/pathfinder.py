@@ -28,6 +28,12 @@ class PathFinder:
     def get_project_dir(self):
         """Return the root directory of the project"""
         path_finder_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        while not os.path.isfile(os.path.join(path_finder_dir, 'anchor.toml')) and path_finder_dir != '/':
+            path_finder_dir = os.path.dirname(path_finder_dir)
+
+        if path_finder_dir == '/':
+            raise RuntimeError("Project root directory not found")
 
         return path_finder_dir
 

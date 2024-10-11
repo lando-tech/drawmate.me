@@ -1,11 +1,18 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from utils.pathfinder import PathFinder
 from utils.xml2json import xml2json
 from utils.json2xml import JsonUtils
 from utils.pdf_handler import DataExtract
 from config.config import AppConfig
+
+# Import ui modules
+from root_canvas import RootCanvas
+from menu_bar import MenuBar
+from main_menu import MainMenu
+
 import json
 import tkinter as tk
 from tkinter import filedialog as fd
@@ -26,11 +33,21 @@ class RootWindow(PathFinder, JsonUtils, DataExtract):
 
         # Set configs
         self.config = AppConfig()
-        self.set_root_configs()
+        self.set_configs()
 
+        # Call root_canvas class
+        self.root_canvas = RootCanvas(master=self.root)
+        # Call menu_bar class
+        self.menu_bar = MenuBar(self.root)
+        # Attach menu_bar to root
+        self.menu_bar.attach_menu_bar(self.root)
+        # Call MainMenu 
+        self.main_menu = MainMenu(self.root)
+
+        # Call mainloop
         self.root.mainloop()
 
-    def set_root_configs(self):
+    def set_configs(self):
         """
         Set root configs, color_pallete, window_size, title etc...
         Defines the main ui components for the child elements.
