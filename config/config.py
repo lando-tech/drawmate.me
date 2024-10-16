@@ -8,7 +8,7 @@ from utils.pathfinder import PathFinder as pf
 
 class AppConfig(pf):
 
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
         self.color_pallete_path = self.COLOR_PALLETE_TOML
         # Place holder for color pallete function 
@@ -38,3 +38,7 @@ class AppConfig(pf):
             config = toml.load(file)
             
             return config
+    
+    def get_color_dict(self):
+        return self.color_pallete
+

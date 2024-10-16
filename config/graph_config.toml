@@ -1,0 +1,15 @@
+[window_dimensions]
+# Starting screen dimensions
+width = 1000
+height = 800
+
+[color_palette]
+# RGB format
+# background = 
+# foreground = 
+# font_color = 
+# rect_color = 
+# circle_color = 
+# triangle_color = 
+# connection_color = 
+grid_line_color = '(234, 247, 248)'

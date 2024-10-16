@@ -32,13 +32,13 @@ def update_json(json_file_path, updates):
 
 def update_connections(file_path, file_name):
     pattern1 = r'\{\{.*?\}\}'
-
+    
     with open(file_path, 'r', encoding='utf-8') as new_connection:
         data = json.load(new_connection)
         for keys, values in data["diagram"]["mxGraphModel"]["root"].items():
             result = re.sub(pattern1, '{{test}}', str(values.get('value')))
             values["value"] = result
-        with open(file_name,
+        with open(f'{pf.JSON_DIR}{file_name}',
                   'w',
                   encoding='utf-8') as update_connects:
             json.dump(data, update_connects, indent=4)
@@ -65,14 +65,34 @@ def json_to_dict(file_path):
         return data 
 
 
-def get_connections(json_data):
-    pattern1 = r'\{\{.*?\}\}'
-    matches = []
-    for k, v in json_data['diagram']['mxGraphModel']['root'].items():
-        result = re.findall(pattern=pattern1, string=str(v.get('value')))
-        if not result:
-            pass
-        else:
-            matches.append(result)
-    return matches
+# def get_connections(json_data):
+    # pattern1 = r'\{\{.*?\}\}'
+    # matches = []
+    # for k, v in json_data.items():
+        # result = re.findall(pattern=pattern1, string=str(v.get('value')))
+        # if not result:
+        #     pass
+        # else:
+        #     matches.append(result)
+    # return matches
 
+def check_connection(json_data):
+    for k, v in json_data.items():
+        if isinstance(v, dict):
+            check_connection(v)
+
+        if 'mxGeometry' in v:
+            x = v.get('mxGeometry').get('x')
+            y = v.get('mxGeometry').get('y')
+            if not x or not y:
+                pass 
+            else:
+                print(f'mxGeometry: {(x, y)}')
+
+        if 'mxPoint' in v:
+            x = v.get('mxPoint').get('x')
+            y = v.get('mxPoint').get('y')
+            if not x or not y:
+                pass 
+            else:
+                print(f'mxPoint: {(x, y)}')
