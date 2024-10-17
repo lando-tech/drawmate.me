@@ -99,7 +99,7 @@ class DataExtract:
             for index, row in app_data.iterrows():
                 for i in range(len(user_data)):
                     if user_data[i].strip() in row['part_num'] or user_data[i].strip() in row['model']:
-                        new_list.append({f'{row['model']}': (user_data[i].strip(), row['description'])})
+                        new_list.append({f'{row["model"]}': (user_data[i].strip(), row['description'])})
             
             return new_list
         # trimmed_list = []
