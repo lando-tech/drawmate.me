@@ -18,7 +18,7 @@ class DataExtract:
 
     def __init__(self):
         # Initialize list of file names stored in the data directory
-        self.file_names = os.listdir(path_finder.get_text_dir())
+        self.file_names = os.listdir(path_finder.TXT_DIR)
         # Initialize current date variable to add the date to the file name
         self.current_date = datetime.today()
 

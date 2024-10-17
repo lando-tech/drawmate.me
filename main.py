@@ -1,15 +1,22 @@
-# Import utils
-from utils.update import *
-from utils.pathfinder import PathFinder
+# import sys
+# import os
 
-# Init pathfiner class
-pf = PathFinder()
-# Get file path
-json_path = pf.JSON_DIR + 'CampMujak_Test_3_2024-10-11_15-00-26.json'
-# Convert json to dict
-json_dir = json_to_dict(json_path)
-# Get mxCell count 
-cell_count = get_cell_count(json_dir)
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-check_connection(json_dir)
+# from database.db import MyDB
 
+# conn = MyDB()
+
+# query = conn.query_db('templates.db', 'audio_templates')
+
+# for i in query:
+#     print(i[1].split('_')[0])
+import toml
+
+with open("/home/landotech/Documents/config_templates/color_palettes/one_dark.toml", "r", encoding="utf-8") as file:
+    data = toml.load(file)
+    color_list = [] 
+    for k, v in data.items():
+        if isinstance(v, dict):
+            for color_name, color_value in v.items():
+                print(color_name, color_value)

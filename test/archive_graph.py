@@ -8,8 +8,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from utils.pathfinder import PathFinder
-from graph_configs import Configs
-
+from gui.graph_configs import Configs  
 
 configs = Configs()
 pf = PathFinder()
